@@ -147,7 +147,7 @@ public class Manejador {
         System.out.println("la direccion origen es: " + prt_mailFrom);
         String resp = "";
         String[] arreglo;
-
+        
         switch (comando) {
             case "LISTROL":
                 NRol listroles = new NRol();

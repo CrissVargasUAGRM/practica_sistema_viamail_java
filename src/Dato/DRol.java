@@ -27,7 +27,7 @@ public class DRol {
             }
             pre.close();
         } catch (Exception e) {
-            System.out.println("Error DConsultar : "+e);
+            System.out.println("Error DRol : "+e);
         }
         finally{
             con.desconectar();
@@ -41,9 +41,9 @@ public class DRol {
             PreparedStatement pre = con.conectar().prepareStatement(query);
             pre.setString(1, nombre);
             pre.setString(2, descripcion);
-            pre.execute();
+            boolean resp = pre.execute();
             pre.close();
-            return true;
+            return resp;
         } catch (Exception e) {
             System.out.println("Error DConsultar crear : "+e);
         }finally{
@@ -62,9 +62,9 @@ public class DRol {
             pre.setString(1, nombre);
             pre.setString(2, descripcion);
             pre.setInt(3, id);
-            pre.execute();
+            boolean resp = pre.execute();
             pre.close();
-            return true;
+            return resp;
         } catch (Exception e) {
             System.out.println("Error DConsultar editar : "+e);
         }finally{
@@ -81,9 +81,9 @@ public class DRol {
             }
             PreparedStatement pre = con.conectar().prepareStatement(query);
             pre.setInt(1, id);
-            pre.execute();
+            boolean resp = pre.execute();
             pre.close();
-            return true;
+            return resp;
         } catch (Exception e) {
             System.out.println("Error DConsultar eliminar : "+e);
         }finally{

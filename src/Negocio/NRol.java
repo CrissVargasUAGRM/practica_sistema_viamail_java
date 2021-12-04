@@ -41,7 +41,7 @@ public class NRol {
     }
 
     public String crear(String[] parametros) {
-        String mensaje = "Error de parametros tien : " + parametros.length + " deberia ser solo 2";
+        String mensaje = "Error de parametros tiene : " + parametros.length + " deberia ser solo 2";
         if (parametros.length == 2) {
             if (drol.crear(parametros[0], parametros[1])) {
                 return successMessage("Rol Registrado exitosamente!!");

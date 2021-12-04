@@ -30,7 +30,7 @@ public class DUsuario {
             }
             pre.close();
         } catch (Exception e) {
-            System.out.println("Error DConsultar : "+e);
+            System.out.println("Error DUsuario : "+e);
         }
         finally{
             con.desconectar();
@@ -39,7 +39,7 @@ public class DUsuario {
     }
     
     public boolean crear(String nombre, String apellido, int ci, String correo, String password,int rol_id){
-        String query = "insert into users (nombre,apellido,ci,correo,password,rol_id) values(?,?,?,?,?,?)";
+        String query = "insert into users (nombre,apellido,ci,correo,password,rol_id,created_at,updated_at) values(?,?,?,?,?,?,now(),now())";
         try {
             PreparedStatement pre = con.conectar().prepareStatement(query);
             pre.setString(1, nombre);
@@ -72,7 +72,7 @@ public class DUsuario {
             }
             pre.close();
         }catch(Exception e){
-            System.out.println("Error DConsultar : "+e);
+            System.out.println("Error DUsuario buscar : "+e);
         }finally{
             con.desconectar();
         }
@@ -80,7 +80,7 @@ public class DUsuario {
     }
     
     public boolean editar(int id, String nombre, String apellido, int ci, String correo, String password,int rol_id){
-        String query = "update users set nombre = ?, apellido = ?, ci = ?, correo = ?, password = ?, rol_id = ?  where id = ? ";
+        String query = "UPDATE users SET nombre = ?, apellido = ?, ci = ?, correo = ?, password = ?, rol_id = "+rol_id+", updated_at = now()  WHERE id = ? ";
         try {
             if (listar(id).isEmpty()){
                 return false;
@@ -91,11 +91,10 @@ public class DUsuario {
             pre.setInt(3, ci);
             pre.setString(4, correo);
             pre.setString(5, password);
-            pre.setInt(6, rol_id);
-            pre.setInt(7, id);
-            pre.execute();
+            pre.setInt(6, id);
+            int res = pre.executeUpdate();
             pre.close();
-            return true;
+            return res == 1;
         } catch (Exception e) {
             System.out.println("Error DUsuario editar : "+e);
         }finally{
