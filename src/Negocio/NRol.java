@@ -21,13 +21,13 @@ public class NRol {
         if (esNumero(id)) {
             ArrayList<Rol> lista = drol.listar(Integer.valueOf(id));
             if (!lista.isEmpty()) {
-                String res = "<h2> Lista de Rol </h2>"
-                        + "<table>"
+                String res = "<h2> Lista de Rol </h2>\n"
+                        + "<table>\n"
                         + "<tr>"
                         + "<td>ID</td>"
                         + "<td>Nombre</td>"
                         + "<td>Descripcion</td>"
-                        + "</tr>";
+                        + "</tr>\n";
                 for (Rol rol : lista) {
                     res += rol.toString();
                 }

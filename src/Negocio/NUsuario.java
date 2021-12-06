@@ -24,8 +24,8 @@ public class NUsuario {
         if (esNumero(id)) {
             ArrayList<Usuario> lista = dusuario.listar(Integer.valueOf(id));
             if (!lista.isEmpty()) {
-                String res = "<h2> Lista de Usuario </h2>"
-                        + "<table>"
+                String res = "<h2> Lista de Usuario </h2>\n"
+                        + "<table>\n"
                         + "<tr>"
                         + "<td>ID</td>"
                         + "<td>Nombre</td>"
@@ -36,7 +36,7 @@ public class NUsuario {
                         + "<td>Cargo</td>"
                         + "<td>Rold_id</td>"
                         + "<td>Nombre_rol</td>"
-                        + "</tr>";
+                        + "</tr>\n";
                 for (Usuario user : lista) {
                     res += user.toString();
                 }
@@ -50,8 +50,8 @@ public class NUsuario {
     }
 
     public String crear(String[] parametros) {
-        String mensaje = "Error de parametros tien : " + parametros.length + " deberia ser solo 7";
-        if (parametros.length == 6) {
+        String mensaje = "Error de parametros tien : " + parametros.length + " deberia ser solo 6";
+        if (parametros.length == 6 && esNumero(parametros[5])) {
             if (dusuario.crear(parametros[0], parametros[1],Integer.valueOf(parametros[2]),parametros[3],parametros[4],Integer.valueOf(parametros[5]))) {
                 return successMessage("Usuario Registrado exitosamente!!");
             }
@@ -61,8 +61,8 @@ public class NUsuario {
     }
 
     public String editar(String[] parametros) {
-        String mensaje = "Error de parametros tiene : " + parametros.length + " deberia ser solo 8";
-        if (parametros.length == 7 && esNumero(parametros[0])) {
+        String mensaje = "Error de parametros tiene : " + parametros.length + " deberia ser solo 7";
+        if (parametros.length == 7 && esNumero(parametros[0]) && esNumero(parametros[6])) {
             if (dusuario.editar(Integer.valueOf(parametros[0]),parametros[1], parametros[2],Integer.valueOf(parametros[3]),parametros[4],parametros[5],Integer.valueOf(parametros[6]))) {
                 return successMessage("Usuario editado exitosamente!!");
             }

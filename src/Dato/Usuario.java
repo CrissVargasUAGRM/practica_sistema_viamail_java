@@ -12,18 +12,16 @@ public class Usuario {
     private int ci;
     private String correo;
     private String password;
-    private String cargo;
     private int rol_id;
     private String rol_nombre;
 
-    public Usuario(int id, String nombre, String apellido, int ci, String correo, String password, String cargo, int rol_id, String rol_nombre) {
+    public Usuario(int id, String nombre, String apellido, int ci, String correo, String password, int rol_id, String rol_nombre) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.ci = ci;
         this.correo = correo;
         this.password = password;
-        this.cargo = cargo;
         this.rol_id = rol_id;
         this.rol_nombre = rol_nombre;
     }
@@ -49,7 +47,6 @@ public class Usuario {
                 + "<td>" + this.ci + "</td>"
                 + "<td>" + this.correo + "</td>"
                 + "<td>" + this.password + "</td>"
-                + "<td>" + this.cargo + "</td>"
                 + "<td>" + this.rol_id + "</td>"
                 + "<td>" + this.rol_nombre + "</td>"
                 + "</tr>\n";
@@ -101,14 +98,6 @@ public class Usuario {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
     }
 
     public int getRol_id() {

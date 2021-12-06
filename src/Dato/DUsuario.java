@@ -19,14 +19,14 @@ public class DUsuario {
     public ArrayList<Usuario> listar(int id){
         ArrayList<Usuario> lista = new ArrayList<>();
         try {
-            String query = (id == 0) ?"SELECT users.id, users.nombre, users.apellido, users.ci, users.correo, users.password, users.rol_id, roles.nombre	"
+            String query = (id == 0) ?"SELECT users.id, users.nombre, users.apellido, users.ci, users.correo, users.password, roles.id, roles.nombre	"
                     + "FROM users, roles WHERE users.rol_id = roles.id;" 
-                    : "SELECT users.id, users.nombre, users.apellido, users.ci, users.correo, users.password, users.rol_id, roles.nombre "
+                    : "SELECT users.id, users.nombre, users.apellido, users.ci, users.correo, users.password, roles.id, roles.nombre "
                     + "FROM users, roles WHERE users.id = "+id+" and users.rol_id = roles.id";
             PreparedStatement pre = con.conectar().prepareStatement(query);
             ResultSet result = pre.executeQuery();
             while(result.next()){
-                lista.add(new Usuario(result.getInt(1), result.getString(2), result.getString(3), result.getInt(4), result.getString(5), result.getString(6), result.getString(7),result.getInt(8), result.getString(9) ));
+                lista.add(new Usuario(result.getInt(1), result.getString(2), result.getString(3), result.getInt(4), result.getString(5), result.getString(6),result.getInt(7), result.getString(8) ));
             }
             pre.close();
         } catch (Exception e) {
@@ -41,6 +41,10 @@ public class DUsuario {
     public boolean crear(String nombre, String apellido, int ci, String correo, String password,int rol_id){
         String query = "insert into users (nombre,apellido,ci,correo,password,rol_id,created_at,updated_at) values(?,?,?,?,?,?,now(),now())";
         try {
+            DRol rol = new DRol();
+            if (rol.listar(rol_id).isEmpty()){
+                return false;
+            }
             PreparedStatement pre = con.conectar().prepareStatement(query);
             pre.setString(1, nombre);
             pre.setString(2, apellido);
@@ -80,9 +84,10 @@ public class DUsuario {
     }
     
     public boolean editar(int id, String nombre, String apellido, int ci, String correo, String password,int rol_id){
-        String query = "UPDATE users SET nombre = ?, apellido = ?, ci = ?, correo = ?, password = ?, rol_id = "+rol_id+", updated_at = now()  WHERE id = ? ";
+        String query = "UPDATE users SET nombre = ?, apellido = ?, ci = ?, correo = ?, password = ?, rol_id = ?, updated_at = now()  WHERE id = ? ";
         try {
-            if (listar(id).isEmpty()){
+            DRol rol = new DRol();
+            if (listar(id).isEmpty() && rol.listar(rol_id).isEmpty()){
                 return false;
             }
             PreparedStatement pre = con.conectar().prepareStatement(query);
@@ -91,7 +96,8 @@ public class DUsuario {
             pre.setInt(3, ci);
             pre.setString(4, correo);
             pre.setString(5, password);
-            pre.setInt(6, id);
+            pre.setInt(6, rol_id);
+            pre.setInt(7, id);
             int res = pre.executeUpdate();
             pre.close();
             return res == 1;

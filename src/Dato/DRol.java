@@ -36,16 +36,16 @@ public class DRol {
     }
     
     public boolean crear(String nombre, String descripcion){
-        String query = "insert into roles (nombre,descripcion) values(?,?)";
+        String query = "insert into roles (nombre,descripcion,created_at,updated_at) values(?,?,now(),now())";
         try {
             PreparedStatement pre = con.conectar().prepareStatement(query);
             pre.setString(1, nombre);
             pre.setString(2, descripcion);
-            boolean resp = pre.execute();
+            pre.execute();
             pre.close();
-            return resp;
+            return true;
         } catch (Exception e) {
-            System.out.println("Error DConsultar crear : "+e);
+            System.out.println("Error DRol crear : "+e);
         }finally{
             con.desconectar();
         }
@@ -62,11 +62,11 @@ public class DRol {
             pre.setString(1, nombre);
             pre.setString(2, descripcion);
             pre.setInt(3, id);
-            boolean resp = pre.execute();
+            pre.execute();
             pre.close();
-            return resp;
+            return true;
         } catch (Exception e) {
-            System.out.println("Error DConsultar editar : "+e);
+            System.out.println("Error DRol editar : "+e);
         }finally{
             con.desconectar();
         }
@@ -81,11 +81,11 @@ public class DRol {
             }
             PreparedStatement pre = con.conectar().prepareStatement(query);
             pre.setInt(1, id);
-            boolean resp = pre.execute();
+            pre.execute();
             pre.close();
-            return resp;
+            return true;
         } catch (Exception e) {
-            System.out.println("Error DConsultar eliminar : "+e);
+            System.out.println("Error DRol eliminar : "+e);
         }finally{
             con.desconectar();
         }

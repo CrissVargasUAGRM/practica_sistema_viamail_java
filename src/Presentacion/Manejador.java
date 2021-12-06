@@ -37,7 +37,8 @@ public class Manejador {
             max++;
             boolean estado = analizarLineasSi(popmessage.getMessageArray(max));
             if (estado) {
-                ejecutarMetodos(this.comando, this.parametros, this.rol, this.correo_origen);
+                String personal = this.id + " - " + this.Nombre + " " + this.Apellido + " rol = " + this.rol;
+                ejecutarMetodos(this.comando, this.parametros, this.rol, this.correo_origen, personal);
             } else {
                 System.out.println("lo siento no se pudo mandar no se encontro el metodo.. \r\n");
             }
@@ -79,7 +80,7 @@ public class Manejador {
                 this.rol = usuario.getRol_id();
             }
             if (line.contains("Subject:")) {
-//                System.out.println(line);
+                System.out.println(line);
                 if (line.split(":")[1] == "" || line.split(":")[1] == " ") {
                     return false;
                 }
@@ -141,68 +142,93 @@ public class Manejador {
         return false;
     }
 
-    private void ejecutarMetodos(String comando, String parametros, int rol, String prt_mailFrom) {
-        System.out.println("El comando:" + this.comando);
-        System.out.println("Los parametros:" + this.parametros);
+    private void ejecutarMetodos(String comando, String parametros, int rol, String prt_mailFrom, String personal) {
+        System.out.println("El comando:" + comando);
+        System.out.println("Los parametros:" + parametros);
         System.out.println("la direccion origen es: " + prt_mailFrom);
+
+        switch (rol) {
+            case 1:
+                permisosAdministrador(comando, parametros, rol, prt_mailFrom, personal);
+                break;
+            case 2:
+                permisosTecnico(comando, parametros, rol, prt_mailFrom, personal);
+                break;
+            case 3:
+                permisosSecretaria(comando, parametros, rol, prt_mailFrom, personal);
+                break;
+        }
+    }
+
+    private void permisosSecretaria(String comando, String parametros, int rol, String prt_mailFrom, String personal) {
+
+    }
+
+    private void permisosAdministrador(String comando, String parametros, int rol, String prt_mailFrom, String personal) {
         String resp = "";
         String[] arreglo;
-        
         switch (comando) {
             case "LISTROL":
-                NRol listroles = new NRol();
                 if (parametros.contains(",")) {
                     break;
                 }
+                NRol listroles = new NRol();
                 resp = listroles.listar(parametros);
                 System.out.println(resp);
-                enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp));
+                enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
                 break;
             case "REGROL":
-                NRol regroles = new NRol();
-                arreglo = parametros.split(",");
-                resp = regroles.crear(arreglo);
-                System.out.println(resp);
-                enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp));
+                if (parametros.contains(",")) {
+                    NRol regroles = new NRol();
+                    arreglo = parametros.split(",");
+                    resp = regroles.crear(arreglo);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
                 break;
             case "EDIROL":
-                NRol ediroles = new NRol();
-                arreglo = parametros.split(",");
-                resp = ediroles.editar(arreglo);
-                System.out.println(resp);
-                enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp));
+                if (parametros.contains(",")) {
+                    NRol ediroles = new NRol();
+                    arreglo = parametros.split(",");
+                    resp = ediroles.editar(arreglo);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
                 break;
             case "DELROL":
-                NRol delroles = new NRol();
-                if (parametros.contains(",")) {
-                    break;
+                if (!parametros.contains(",")) {
+                    NRol delroles = new NRol();
+                    resp = delroles.eliminar(parametros);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
                 }
-                resp = delroles.eliminar(parametros);
-                System.out.println(resp);
-                enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp));
                 break;
             case "LISTUSERS":
-                NUsuario listusuario = new NUsuario();
                 if (parametros.contains(",")) {
                     break;
                 }
+                NUsuario listusuario = new NUsuario();
                 resp = listusuario.listar(parametros);
                 System.out.println(resp);
-                enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp));
+                enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
                 break;
             case "REGUSERS":
-                NUsuario regusuario = new NUsuario();
-                arreglo = parametros.split(",");
-                resp = regusuario.crear(arreglo);
-                System.out.println(resp);
-                enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp));
+                if (parametros.contains(",")) {
+                    NUsuario regusuario = new NUsuario();
+                    arreglo = parametros.split(",");
+                    resp = regusuario.crear(arreglo);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
                 break;
             case "EDIUSERS":
-                NUsuario ediusuario = new NUsuario();
-                arreglo = parametros.split(",");
-                resp = ediusuario.editar(arreglo);
-                System.out.println(resp);
-                enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp));
+                if (parametros.contains(",")) {
+                    NUsuario ediusuario = new NUsuario();
+                    arreglo = parametros.split(",");
+                    resp = ediusuario.editar(arreglo);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
                 break;
             case "DELUSERS":
                 NUsuario delusuario = new NUsuario();
@@ -211,15 +237,19 @@ public class Manejador {
                 }
                 resp = delusuario.eliminar(parametros);
                 System.out.println(resp);
-                enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp));
+                enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
                 break;
         }
     }
 
-    public String getMensajeRespuesta(String res) {
+    private void permisosTecnico(String comando, String parametros, int rol, String prt_mailFrom, String personal) {
+
+    }
+
+    private String getMensajeRespuesta(String res, String personal) {
 
         String estilo = "<link rel='stylesheet' href='https://codepen.io/ingyas/pen/NENBOm.css'>";
-        return "Content-Type:text/html;\r\n<html>" + estilo + res + "</html>";
+        return "Content-Type:text/html;\r\n<html>" + estilo + res + "</br><p>" + personal + "</p></html>";
     }
 
 }
