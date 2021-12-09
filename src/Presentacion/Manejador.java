@@ -1,7 +1,9 @@
 package Presentacion;
 
 import Dato.Usuario;
+import Negocio.NCliente;
 import Negocio.NRol;
+import Negocio.NTelefono;
 import Negocio.NUsuario;
 import java.util.ArrayList;
 import java.util.List;
@@ -122,7 +124,9 @@ public class Manejador {
             "VIATICO",
             "DETALLEPRODUCTO",
             "ROL",
-            "USERS"
+            "USERS",
+            "TEUSERS",
+            "TECLIENTE"
         };
         String[] opciones = {
             "LIST",
@@ -168,14 +172,14 @@ public class Manejador {
         String resp = "";
         String[] arreglo;
         switch (comando) {
+//---------- GESTIONAR ROL --------------------------------------------------
             case "LISTROL":
-                if (parametros.contains(",")) {
-                    break;
+                if (!parametros.contains(",")) {
+                    NRol listroles = new NRol();
+                    resp = listroles.listar(parametros);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
                 }
-                NRol listroles = new NRol();
-                resp = listroles.listar(parametros);
-                System.out.println(resp);
-                enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
                 break;
             case "REGROL":
                 if (parametros.contains(",")) {
@@ -203,14 +207,14 @@ public class Manejador {
                     enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
                 }
                 break;
+//---------- USERS --------------------------------------------------------
             case "LISTUSERS":
-                if (parametros.contains(",")) {
-                    break;
+                if (!parametros.contains(",")) {
+                    NUsuario listusuario = new NUsuario();
+                    resp = listusuario.listar(parametros);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
                 }
-                NUsuario listusuario = new NUsuario();
-                resp = listusuario.listar(parametros);
-                System.out.println(resp);
-                enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
                 break;
             case "REGUSERS":
                 if (parametros.contains(",")) {
@@ -231,13 +235,119 @@ public class Manejador {
                 }
                 break;
             case "DELUSERS":
-                NUsuario delusuario = new NUsuario();
-                if (parametros.contains(",")) {
-                    break;
+                if (!parametros.contains(",")) {
+                    NUsuario delusuario = new NUsuario();
+                    resp = delusuario.eliminar(parametros);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
                 }
-                resp = delusuario.eliminar(parametros);
-                System.out.println(resp);
-                enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                break;
+
+//---------- CLIENTE ----------------------------------------------------
+            case "LISTCLIENTE":
+                if (!parametros.contains(",")) {
+                    NCliente listcliente = new NCliente();
+                    resp = listcliente.listar(parametros);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "REGCLIENTE":
+                if (parametros.contains(",")) {
+                    NCliente regcliente = new NCliente();
+                    arreglo = parametros.split(",");
+                    resp = regcliente.crear(arreglo);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "EDICLIENTE":
+                if (parametros.contains(",")) {
+                    NCliente edicliente = new NCliente();
+                    arreglo = parametros.split(",");
+                    resp = edicliente.editar(arreglo);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "DELCLIENTE":
+                if (!parametros.contains(",")) {
+                    NCliente delcliente = new NCliente();
+                    resp = delcliente.eliminar(parametros);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+
+//------------- TELEFONO CLIENTE -----------------------------------------------
+            case "LISTTECLIENTE":
+                if (!parametros.contains(",")) {
+                    NTelefono listtecliente = new NTelefono();
+                    resp = listtecliente.listar(parametros, true);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "REGTECLIENTE":
+                if (parametros.contains(",")) {
+                    NTelefono regtecliente = new NTelefono();
+                    arreglo = parametros.split(",");
+                    resp = regtecliente.crear(arreglo, true);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "EDITELCIENTE":
+                if (parametros.contains(",")) {
+                    NTelefono editecliente = new NTelefono();
+                    arreglo = parametros.split(",");
+                    resp = editecliente.editar(arreglo, true);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "DELTECLIENTE":
+                if (!parametros.contains(",")) {
+                    NTelefono deltecliente = new NTelefono();
+                    resp = deltecliente.eliminar(parametros, true);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+//------------- TELFONO USERS --------------------------------------------------
+                case "LISTTEUSERS":
+                if (!parametros.contains(",")) {
+                    NTelefono listusuario = new NTelefono();
+                    resp = listusuario.listar(parametros,false);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "REGTEUSERS":
+                if (parametros.contains(",")) {
+                    NTelefono regusuario = new NTelefono();
+                    arreglo = parametros.split(",");
+                    resp = regusuario.crear(arreglo,false);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "EDITEUSERS":
+                if (parametros.contains(",")) {
+                    NTelefono ediusuario = new NTelefono();
+                    arreglo = parametros.split(",");
+                    resp = ediusuario.editar(arreglo,false);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "DELTEUSERS":
+                if (!parametros.contains(",")) {
+                    NTelefono delusuario = new NTelefono();
+                    resp = delusuario.eliminar(parametros,false);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
                 break;
         }
     }
@@ -247,7 +357,6 @@ public class Manejador {
     }
 
     private String getMensajeRespuesta(String res, String personal) {
-
         String estilo = "<link rel='stylesheet' href='https://codepen.io/ingyas/pen/NENBOm.css'>";
         return "Content-Type:text/html;\r\n<html>" + estilo + res + "</br><p>" + personal + "</p></html>";
     }
