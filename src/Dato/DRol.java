@@ -53,7 +53,7 @@ public class DRol {
     }
     
     public boolean editar(int id, String nombre, String descripcion){
-        String query = "update roles set nombre = ?, descripcion = ? where id = ? ";
+        String query = "update roles set nombre = ?, descripcion = ?, updated_at = now() where id = ? ";
         try {
             if (listar(id).isEmpty()){
                 return false;
