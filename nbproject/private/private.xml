@@ -3,17 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/Usuario/Desktop/Supportsatelital/MailServer/src/Presentacion/Grupo07saMail.java</file>
-            <file>file:/C:/Users/Usuario/Desktop/Supportsatelital/MailServer/src/DB/Conexion.java</file>
-=======
-            <file>file:/D:/Semestre/Final/Tecnologia%20Web/PrimerParcial/MailServer/src/Negocio/NRol.java</file>
-            <file>file:/D:/Semestre/Final/Tecnologia%20Web/PrimerParcial/MailServer/src/Negocio/NCliente.java</file>
-            <file>file:/D:/Semestre/Final/Tecnologia%20Web/PrimerParcial/MailServer/src/Dato/DTelefono.java</file>
-            <file>file:/D:/Semestre/Final/Tecnologia%20Web/PrimerParcial/MailServer/src/Dato/DUsuario.java</file>
-            <file>file:/D:/Semestre/Final/Tecnologia%20Web/PrimerParcial/MailServer/src/Presentacion/Manejador.java</file>
-            <file>file:/D:/Semestre/Final/Tecnologia%20Web/PrimerParcial/MailServer/src/Negocio/NTelefono.java</file>
->>>>>>> 8cd32ec869ce441f27d8d5d9bc45fb5b30984dba
+            <file>file:/D:/tecnologias%20web/primer%20parcial/MailServer/src/Negocio/NActividad.java</file>
+            <file>file:/D:/tecnologias%20web/primer%20parcial/MailServer/src/Dato/Cliente.java</file>
+            <file>file:/D:/tecnologias%20web/primer%20parcial/MailServer/src/Presentacion/Manejador.java</file>
+            <file>file:/D:/tecnologias%20web/primer%20parcial/MailServer/src/Dato/Actividad.java</file>
+            <file>file:/D:/tecnologias%20web/primer%20parcial/MailServer/src/Dato/DCliente.java</file>
+            <file>file:/D:/tecnologias%20web/primer%20parcial/MailServer/src/Negocio/NCliente.java</file>
+            <file>file:/D:/tecnologias%20web/primer%20parcial/MailServer/src/Dato/DActividad.java</file>
         </group>
     </open-files>
 </project-private>

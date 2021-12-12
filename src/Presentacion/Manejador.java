@@ -1,12 +1,17 @@
 package Presentacion;
 
 import Dato.Usuario;
+import Negocio.NActividad;
+import Negocio.NAsignacionServicio;
 import Negocio.NCliente;
+import Negocio.NDetalleProducto;
 import Negocio.NRol;
+import Negocio.NServicio;
 import Negocio.NTelefono;
 import Negocio.NUsuario;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 
 /**
  *
@@ -126,7 +131,8 @@ public class Manejador {
             "ROL",
             "USERS",
             "TEUSERS",
-            "TECLIENTE"
+            "TECLIENTE",
+            "ASIGNACIONSERVICIO"
         };
         String[] opciones = {
             "LIST",
@@ -345,6 +351,147 @@ public class Manejador {
                 if (!parametros.contains(",")) {
                     NTelefono delusuario = new NTelefono();
                     resp = delusuario.eliminar(parametros,false);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+/*---------------------------------- ACTIVIDAD ------------------------------------------------------------------------------------*/
+            case "LISTACTIVIDADES":
+                if (!parametros.contains(",")) {
+                    NActividad listactividad = new NActividad();
+                    resp = listactividad.listar(parametros);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "REGACTIVIDADES":
+                if (parametros.contains(",")) {
+                    NActividad regactividad = new NActividad();
+                    arreglo = parametros.split(",");
+                    resp = regactividad.crear(arreglo);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "EDIACTIVIDADES":
+                if (parametros.contains(",")) {
+                    NActividad editactividad = new NActividad();
+                    arreglo = parametros.split(",");
+                    resp = editactividad.editar(arreglo);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "DELACTIVIDADES":
+                if (!parametros.contains(",")) {
+                    NActividad deltactividad = new NActividad();
+                    resp = deltactividad.eliminar(parametros);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+                
+/* ----------------------------------DETALLES DE ACTIVIDAD PRODUCTO--------------------------------------------------------------------*/
+            case "LISTDETALLEPRODUCTO":
+                if (!parametros.contains(",")) {
+                    NDetalleProducto listdetalle = new NDetalleProducto();
+                    resp = listdetalle.listar(parametros);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "REGDETALLEPRODUCTO":
+                if (!parametros.contains(",")) {
+                    NDetalleProducto regdetalleprod = new NDetalleProducto();
+                    resp = regdetalleprod.agregaractual(parametros);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "EDIDETALLEPRODUCTO":
+                if (parametros.contains(",")) {
+                    NDetalleProducto editdetalle = new NDetalleProducto();
+                    arreglo = parametros.split(",");
+                    resp = editdetalle.editar(arreglo);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "DELDETALLEPRODUCTO":
+                if (parametros.contains(",")) {
+                    NDetalleProducto deldetalleprod = new NDetalleProducto();
+                    arreglo = parametros.split(",");
+                    resp = deldetalleprod.eliminar(arreglo);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+/*------------------------------------------ SERVICIOS ----------------------------------------------------------------------*/
+            case "LISTSERVICIO":
+                if (!parametros.contains(",")) {
+                    NServicio listservicio = new NServicio();
+                    resp = listservicio.listar(parametros);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "REGSERVICIO":
+                if (parametros.contains(",")) {
+                    NServicio regservicio = new NServicio();
+                    arreglo = parametros.split(",");
+                    resp = regservicio.crear(arreglo);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "EDISERVICIO":
+                if (parametros.contains(",")) {
+                    NServicio editservicio = new NServicio();
+                    arreglo = parametros.split(",");
+                    resp = editservicio.editar(arreglo);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "DELSERVICIO":
+                if (!parametros.contains(",")) {
+                    NServicio delservicio = new NServicio();
+                    resp = delservicio.eliminar(parametros);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+/*-------------------------------------------------------- DETALLE ASIGNACION USUARIO -------------------------------------------*/
+            case "LISTASIGNACIONSERVICIO":
+                if (!parametros.contains(",")) {
+                    NAsignacionServicio listasigserv = new NAsignacionServicio();
+                    resp = listasigserv.listar(parametros);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "REGASIGNACIONSERVICIO":
+                if (!parametros.contains(",")) {
+                    NAsignacionServicio regasigserv = new NAsignacionServicio();
+                    resp = regasigserv.agregaractual(parametros);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "EDIASIGNACIONSERVICIO":
+                if (parametros.contains(",")) {
+                    NAsignacionServicio editasigserv = new NAsignacionServicio();
+                    arreglo = parametros.split(",");
+                    resp = editasigserv.editar(arreglo);
+                    System.out.println(resp);
+                    enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
+                }
+                break;
+            case "DELASIGNACIONSERVICIO":
+                if (parametros.contains(",")) {
+                    NAsignacionServicio delasigserv = new NAsignacionServicio();
+                    arreglo = parametros.split(",");
+                    resp = delasigserv.eliminar(arreglo);
                     System.out.println(resp);
                     enviarMensajeCorreoOrigen(prt_mailFrom, comando + " + " + parametros, getMensajeRespuesta(resp, personal));
                 }
